@@ -1,9 +1,24 @@
-// pages/products.tsx
-
-import { NextPage } from "next";
+import Header from "@/components/Header";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { Container } from "reactstrap";
+import ProductsList from "@/components/ProductsList";
+import { ProductType, fetchProducts } from "@/services/products";
+import { ReactNode } from "react";
 
-const Products: NextPage = () => {
+interface ProductsProps  {
+  children?: ReactNode
+  products?: ProductType[]
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const products = await fetchProducts()
+  return {
+    props: { products }
+  }
+}
+
+const Products: NextPage = ({ children, products}: ProductsProps) => {
   return (
     <>
       <Head>
@@ -12,9 +27,17 @@ const Products: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>
-        Nossos Produtos
-      </h1>
+      <Header />
+
+      <main>
+        <Container className="mb-5">
+          <h1 className="my-5">
+            Nossos Produtos
+          </h1>
+
+          {<ProductsList products={products} />}
+        </Container>
+      </main>
     </>
   )
 }

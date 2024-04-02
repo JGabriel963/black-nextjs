@@ -1,3 +1,4 @@
+import { Children } from "react";
 import getConversations from "../actions/getConversations";
 import Sidebar from "../components/sidebar/Sidebar";
 import ConversationList from "./components/ConversationList";
@@ -13,8 +14,8 @@ export default async function ConversationsLayout({
     <Sidebar>
       <div className="h-full">
         <ConversationList initialItem={conversations} />
+        {children}
       </div>
-      <div className="h-full">{children}</div>
     </Sidebar>
   );
 }

@@ -3,3 +3,6 @@ CLERK_SECRET_KEY=sk_test_aezHpU8Lgf3P4LrmVO76VAcuLm2ke3j6sVwngqV2dg
 
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+NEXT_PUBLIC_STREAM_API_KEY=36ktcxuby99s
+STREAM_SECRET_KEY=ns3uv95xzndmx2c6nqa8p3qpdhwgzxqv385p5w64npcqqn4uakymrtbcvnhyudwt

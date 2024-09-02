@@ -1,10 +1,9 @@
-const prompt = require('prompt-sync')()
+let list = ["2382329382", "3293293i293", "923283208484"]
 
-let n = Number(prompt("Digite um número entre 0 e 10: ")) 
+let text = ""
 
-while(isNaN(n) || n < 0 || n > 10) {
-    console.log("Valor inválido")
-    n = Number(prompt("Digite um número entre 0 e 10: ")) 
+for (let i = 0; i < list.length; i++) {
+    text += `https://nasaex.com/dashboard?evento=${list[i]} \n`
 }
 
-console.log("Número: ", n)
+console.log(text)

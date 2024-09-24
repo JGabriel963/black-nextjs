@@ -6,6 +6,7 @@ import { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { dark } from "@clerk/themes"
 import Provider from "./Provider"
+import { ptBR } from '@clerk/localizations'
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider  appearance={{
+    <ClerkProvider localization={ptBR} appearance={{
       baseTheme: dark,
       variables: { colorPrimary: "#3372FF", fontSize: '16px' }
     }}>

@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.10.2",
+    "@prisma/client": "^6.2.1",
+    "@radix-ui/react-accordion": "^1.2.2",
+    "@radix-ui/react-dialog": "^1.1.5",
+    "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -18,7 +22,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "usehooks-ts": "^3.1.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -28,6 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
+    "prisma": "^6.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

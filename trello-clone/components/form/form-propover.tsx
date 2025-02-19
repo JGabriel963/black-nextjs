@@ -9,7 +9,7 @@ import { FormSubmit } from "./form-submit";
 import { useAction } from "@/hooks/use-action";
 import { createBoard } from "@/actions/create-board";
 import { toast } from "sonner";
-import { ComponentRef, ElementRef, useEffect, useRef } from "react";
+import { ComponentRef, useRef } from "react";
 import { FormPicker } from "./form-picker";
 
 interface FormInputProps {

@@ -80,7 +80,7 @@ export default function App() {
 
       {/* External Link */}
       <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
-      <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
+        <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
 
@@ -94,21 +94,28 @@ export default function App() {
               {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 ? "Parabéns 🎉🎉" : ""}
             </AlertDialogTitle>
             <AlertDialogDescription>
-            {data[prizeNumber].id === 5 && " Infelizmente não foi dessa vez."}
-            {data[prizeNumber].id === 2 && "Quase lá! Gire a roleta mais uma vez e tente a sorte novamente."}
+              {data[prizeNumber].id === 5 && " Infelizmente não foi dessa vez."}
+              {data[prizeNumber].id === 2 && "Quase lá! Gire a roleta mais uma vez e tente a sorte novamente."}
 
-            {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 ? <p>
-              Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
-            </p> : ""}
+              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 ? <p>
+                Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
+              </p> : ""}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="cursor-pointer" onClick={() => {
+            {data[prizeNumber].id === 2 ? <AlertDialogCancel className="cursor-pointer" onClick={() => {
               setOpen(false);
               setConfetti(false);
             }}>
               Continuar
-            </AlertDialogCancel>
+            </AlertDialogCancel> : <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self">
+              <AlertDialogCancel className="cursor-pointer" onClick={() => {
+                setOpen(false);
+                setConfetti(false);
+              }}>
+                Continuar
+              </AlertDialogCancel>
+            </a>}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

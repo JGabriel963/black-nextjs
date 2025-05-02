@@ -15,11 +15,11 @@ import Confetti from "react-confetti";
 
 const data = [
   { id: 1, option: "BRINDE" },
-  { id: 2, option: "Tente novamente" },
+  { id: 2, option: "PERDEU A VEZ" },
   { id: 3, option: "1 INGRESSO" },
   { id: 4, option: "BRINDE" },
   { id: 5, option: "PERDEU A VEZ" },
-  { id: 6, option: "PIRULITO" },
+  { id: 6, option: "TENTE NOVAMENTE" },
 ];
 
 export default function App() {
@@ -53,17 +53,17 @@ export default function App() {
           spinDuration={0.6}
           backgroundColors={[
             "#60a5fa",
-            "#64b031",
+            "oklch(63.7% 0.237 25.331)",
             "oklch(90.5% 0.182 98.111)",
             "#60a5fa",
             "oklch(63.7% 0.237 25.331)",
-            "#fb7185",
+            "#64b031",
           ]}
           onStopSpinning={() => {
             setMustSpin(false);
             setOpen(true);
             const option = data[prizeNumber].id
-            if (option === 1 || option === 3 || option === 4 || option === 6) {
+            if (option === 1 || option === 3 || option === 4) {
               setConfetti(true);
             }
           }}
@@ -79,7 +79,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https://nasaex.com/version-test/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -89,26 +89,26 @@ export default function App() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {data[prizeNumber].id === 5 && "PERDEU A VEZ 😓"}
-              {data[prizeNumber].id === 2 && "TENTE NOVAMENTE 🔁"}
-              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 ? "Parabéns 🎉🎉" : ""}
+              {data[prizeNumber].id === 5 || data[prizeNumber].id === 2 ? "PERDEU A VEZ 😓" : ""}
+              {data[prizeNumber].id === 6 && "TENTE NOVAMENTE 🔁"}
+              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 && data[prizeNumber].id !== 6 ? "Parabéns 🎉🎉" : ""}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {data[prizeNumber].id === 5 && " Infelizmente não foi dessa vez."}
-              {data[prizeNumber].id === 2 && "Quase lá! Gire a roleta mais uma vez e tente a sorte novamente."}
+              {data[prizeNumber].id === 5 || data[prizeNumber].id === 2  ? " Infelizmente não foi dessa vez." : ""}
+              {data[prizeNumber].id === 6 && "Quase lá! Gire a roleta mais uma vez e tente a sorte novamente."}
 
-              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 ? <p>
+              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 && data[prizeNumber].id !== 6 ? <p>
                 Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
               </p> : ""}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            {data[prizeNumber].id === 2 ? <AlertDialogCancel className="cursor-pointer" onClick={() => {
+            {data[prizeNumber].id === 6 ? <AlertDialogCancel className="cursor-pointer" onClick={() => {
               setOpen(false);
               setConfetti(false);
             }}>
               Continuar
-            </AlertDialogCancel> : <a href="https://nasaex.com/version-test/totem?cod=Xand_bar" target="_self">
+            </AlertDialogCancel> : <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self">
               <AlertDialogCancel className="cursor-pointer" onClick={() => {
                 setOpen(false);
                 setConfetti(false);

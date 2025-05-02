@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { Button } from "./components/ui/button";
+import { ExternalLink } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,7 +12,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import Confetti from "react-confetti";
-import { p } from "framer-motion/client";
 
 const data = [
   { id: 1, option: "BRINDE" },
@@ -77,6 +77,12 @@ export default function App() {
       >
         GIRAR
       </Button>
+
+      {/* External Link */}
+      <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
+      </a>
+
 
       {/* Pop-up */}
       <AlertDialog open={open}>

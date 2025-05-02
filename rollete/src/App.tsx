@@ -49,7 +49,7 @@ export default function App() {
           innerBorderColor={"#f2f2f2"}
           radiusLineColor={"tranparent"}
           radiusLineWidth={1}
-          fontSize={18}
+          fontSize={16}
           spinDuration={0.6}
           backgroundColors={[
             "#60a5fa",

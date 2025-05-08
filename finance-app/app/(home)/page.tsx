@@ -9,7 +9,7 @@ export default async function HomePage() {
 
     return (
        <BackgroundBeamsWithCollision>
-         <div className="h-screen flex flex-col w-full items-center justify-center ">
+         <div className="h-full flex flex-col w-full items-center justify-center px-2">
             <div className="w-full max-w-3xl  items-center justify-center flex flex-col gap-1"> 
                 <h1 className="text-2xl text-center md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-500">Organize e gerencie sua contas de um forma simple e sem planilhas</h1>
                 <div>

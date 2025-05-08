@@ -78,7 +78,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https:asaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/totem?cod=pira" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 

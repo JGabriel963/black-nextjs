@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+        
+model Rollete {
+  id String @id @default(uuid())
+  title String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  options Options[]
+}
+
+model Options {
+  id String @id @default(uuid())
+  name String
+  isPrize Boolean @default(true)
+  color String? @default("#AAAAAA")
+  repeat Boolean @default(false)
+  quantity Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  rolleteId String
+  rollete Rollete @relation(fields: [rolleteId], references: [id], onDelete: Cascade)
+
+  @@index([rolleteId])
+}

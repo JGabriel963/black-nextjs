@@ -12,8 +12,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import Confetti from "react-confetti";
-import { WheelData } from "react-custom-roulette/dist/components/Wheel/types";
-import { span } from "framer-motion/client";
 
 const data = [
   { id: 1, option: "BRINDE" },
@@ -34,6 +32,7 @@ export default function App() {
   const [prizers, setPrizers] = useState<any[]>([])
   const [dataPrizers, setDataPrizers] = useState<any[]>([])
   const [colors, setColors] = useState<any[]>([])
+  const [zoom, setZoom] = useState(1);
 
   async function getPrizers() {
     const response = await fetch("https://nasago.bubbleapps.io/version-test/api/1.1/wf/rolleta").then(responso => responso.json())
@@ -44,7 +43,7 @@ export default function App() {
 
     console.log(datas)
 
-    const newDatas = datas.map((item: any, index: number) => {
+    const newDatas = datas.map((item: any) => {
       return { id: parseInt(item.id), option: item.name }
     })
 
@@ -66,7 +65,35 @@ export default function App() {
         console.log(res)
       })
 
+      document.body.style.overflow = "hidden";
+      setZoom(1.2);
+
   }, [])
+
+  async function RemoveItemQuantity(id: any) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({ 
+      "premioId": id
+    });
+
+    const requestOptions: any = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("https://nasago.bubbleapps.io/version-test/api/1.1/wf/minus_item", requestOptions)
+      .then(() => {
+        window.location.href = "https://nasaex.com/totem?cod=mero"
+      })
+      .catch((error) => {
+        console.log(error)
+        window.location.href = "https://nasaex.com/totem?cod=mero"
+      });
+  }
 
   const handleSpinClick = () => {
     if (!mustSpin) {
@@ -77,8 +104,13 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#314367] to-[#2B3856] relative">
-      <div className="relative">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#314367] to-[#2B3856] relative" style={{
+      transform: `scale(${zoom})`,
+      transformOrigin: "center center", // centraliza o zoom
+      transition: "transform 0.3s ease-in-out",
+      overflow: 'hidden'
+    }}>
+      <div className="relative overflow-hidden">
         {dataPrizers.length > 0 && (
           <Wheel
             mustStartSpinning={mustSpin}
@@ -120,9 +152,14 @@ export default function App() {
 
 
       {/* External Link */}
-      <a href="https://nasaex.com/totem?cod=mero" target="_self" className="absolute top-2 right-2">
+      {/* <a href="https://nasaex.com/totem?cod=mero" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
-      </a>
+      </a> */}
+      <div onClick={() => {
+        window.location.href = "https://nasaex.com/totem?cod=mero"
+      }} className="absolute top-2 right-2">
+        <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
+      </div>
 
 
       {/* Pop-up */}
@@ -139,10 +176,9 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter >
-            <a href="https://nasaex.com/totem?cod=mero">
-              <AlertDialogCancel>
+              <AlertDialogCancel onClick={() => RemoveItemQuantity(prizers[prizeNumber]._id)}>
                 Concluir
-              </AlertDialogCancel>    </a>
+              </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

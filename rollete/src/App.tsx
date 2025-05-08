@@ -87,7 +87,8 @@ export default function App() {
 
     fetch("https://nasago.bubbleapps.io/version-test/api/1.1/wf/minus_item", requestOptions)
       .then(() => {
-        window.location.href = "https://nasaex.com/totem?cod=mero"
+        setConfetti(false)
+        setOpen(false)
       })
       .catch((error) => {
         console.log(error)
@@ -104,7 +105,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#314367] to-[#2B3856] relative" style={{
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r bg-neutral-950" style={{
       transform: `scale(${zoom})`,
       transformOrigin: "center center", // centraliza o zoom
       transition: "transform 0.3s ease-in-out",
@@ -176,7 +177,7 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter >
-              <AlertDialogCancel onClick={() => RemoveItemQuantity(prizers[prizeNumber]._id)}>
+              <AlertDialogCancel className="cursor-pointer" onClick={() => RemoveItemQuantity(prizers[prizeNumber]._id)}>
                 Concluir
               </AlertDialogCancel>
           </AlertDialogFooter>

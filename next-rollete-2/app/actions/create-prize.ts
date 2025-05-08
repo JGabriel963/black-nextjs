@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 interface CreatePrizeProps {
   name: string;
   isPrize: boolean;
-  color?: string;
+  color: string;
   repeat: boolean;
   quantity: number;
 

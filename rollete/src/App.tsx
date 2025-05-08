@@ -65,9 +65,6 @@ export default function App() {
         console.log(res)
       })
 
-      document.body.style.overflow = "hidden";
-      setZoom(1.2);
-
   }, [])
 
   async function RemoveItemQuantity(id: any) {
@@ -105,12 +102,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r bg-neutral-950" style={{
-      transform: `scale(${zoom})`,
-      transformOrigin: "center center", // centraliza o zoom
-      transition: "transform 0.3s ease-in-out",
-      overflow: 'hidden'
-    }}>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r bg-neutral-950">
       <div className="relative overflow-hidden">
         {dataPrizers.length > 0 && (
           <Wheel

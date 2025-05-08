@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { Button } from "./components/ui/button";
 import { ExternalLink } from 'lucide-react'
@@ -12,6 +12,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import Confetti from "react-confetti";
+import { WheelData } from "react-custom-roulette/dist/components/Wheel/types";
+import { span } from "framer-motion/client";
 
 const data = [
   { id: 1, option: "BRINDE" },
@@ -22,11 +24,49 @@ const data = [
   { id: 6, option: "TENTE NOVAMENTE" },
 ];
 
+
+
 export default function App() {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [confetti, setConfetti] = useState(false);
+  const [prizers, setPrizers] = useState<any[]>([])
+  const [dataPrizers, setDataPrizers] = useState<any[]>([])
+  const [colors, setColors] = useState<any[]>([])
+
+  async function getPrizers() {
+    const response = await fetch("https://nasago.bubbleapps.io/version-test/api/1.1/wf/rolleta").then(responso => responso.json())
+
+    const datas = response.response.prizers
+
+    setPrizers(datas)
+
+    console.log(datas)
+
+    const newDatas = datas.map((item: any, index: number) => {
+      return { id: parseInt(item.id), option: item.name }
+    })
+
+
+    setDataPrizers(newDatas)
+
+    const newColors = datas.map((item: any) => {
+      return item.color
+    })
+
+    setColors(newColors)
+
+    return datas
+  }
+
+  useEffect(() => {
+    getPrizers()
+      .then((res) => {
+          console.log(res)
+      })
+
+  }, [])
 
   const handleSpinClick = () => {
     if (!mustSpin) {
@@ -39,10 +79,11 @@ export default function App() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#314367] to-[#2B3856] relative">
       <div className="relative">
-        <Wheel
+        {dataPrizers.length > 0 && (
+          <Wheel
           mustStartSpinning={mustSpin}
           prizeNumber={prizeNumber}
-          data={data}
+          data={dataPrizers}
           disableInitialAnimation={true}
           outerBorderColor="#FFFFFF"
           outerBorderWidth={4}
@@ -50,15 +91,10 @@ export default function App() {
           radiusLineColor={"tranparent"}
           radiusLineWidth={1}
           fontSize={16}
+          fontWeight='bold'
+          textColors={["white"]}
           spinDuration={0.6}
-          backgroundColors={[
-            "#60a5fa",
-            "oklch(63.7% 0.237 25.331)",
-            "oklch(90.5% 0.182 98.111)",
-            "#60a5fa",
-            "oklch(63.7% 0.237 25.331)",
-            "#64b031",
-          ]}
+          backgroundColors={colors}
           onStopSpinning={() => {
             setMustSpin(false);
             setOpen(true);
@@ -68,6 +104,8 @@ export default function App() {
             }
           }}
         />
+        )}
+
 
         <div className="absolute top-[50%] left-[50%] z-20 translate-x-[-55%] translate-y-[-55%] size-12 bg-white rounded-full shadow-md" />
       </div>
@@ -78,6 +116,9 @@ export default function App() {
         GIRAR
       </Button>
 
+      
+      
+
       {/* External Link */}
       <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
@@ -85,37 +126,24 @@ export default function App() {
 
 
       {/* Pop-up */}
-      <AlertDialog open={open}>
+      <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {data[prizeNumber].id === 5 || data[prizeNumber].id === 2 ? "PERDEU A VEZ 😓" : ""}
-              {data[prizeNumber].id === 6 && "TENTE NOVAMENTE 🔁"}
-              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 && data[prizeNumber].id !== 6 ? "Parabéns 🎉🎉" : ""}
+              Parabéns 🎉🎉🎉🎉
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {data[prizeNumber].id === 5 || data[prizeNumber].id === 2  ? " Infelizmente não foi dessa vez." : ""}
-              {data[prizeNumber].id === 6 && "Quase lá! Gire a roleta mais uma vez e tente a sorte novamente."}
-
-              {data[prizeNumber].id !== 5 && data[prizeNumber].id !== 2 && data[prizeNumber].id !== 6 ? <p>
-                Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
-              </p> : ""}
+              Você ganhou um <span className="font-bold">
+              {prizers[prizeNumber].real ? prizers[prizeNumber].real : ""}
+              </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            {data[prizeNumber].id === 6 ? <AlertDialogCancel className="cursor-pointer" onClick={() => {
-              setOpen(false);
-              setConfetti(false);
+            <AlertDialogCancel className="cursor-pointer" onClick={() => {
+              setConfetti(false)
             }}>
-              Continuar
-            </AlertDialogCancel> : <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self">
-              <AlertDialogCancel className="cursor-pointer" onClick={() => {
-                setOpen(false);
-                setConfetti(false);
-              }}>
-                Continuar
-              </AlertDialogCancel>
-            </a>}
+              Concluir
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

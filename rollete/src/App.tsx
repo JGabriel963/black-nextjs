@@ -63,7 +63,7 @@ export default function App() {
   useEffect(() => {
     getPrizers()
       .then((res) => {
-          console.log(res)
+        console.log(res)
       })
 
   }, [])
@@ -81,29 +81,29 @@ export default function App() {
       <div className="relative">
         {dataPrizers.length > 0 && (
           <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={dataPrizers}
-          disableInitialAnimation={true}
-          outerBorderColor="#FFFFFF"
-          outerBorderWidth={4}
-          innerBorderColor={"#f2f2f2"}
-          radiusLineColor={"tranparent"}
-          radiusLineWidth={1}
-          fontSize={16}
-          fontWeight='bold'
-          textColors={["white"]}
-          spinDuration={0.6}
-          backgroundColors={colors}
-          onStopSpinning={() => {
-            setMustSpin(false);
-            setOpen(true);
-            const option = data[prizeNumber].id
-            if (option === 1 || option === 3 || option === 4) {
-              setConfetti(true);
-            }
-          }}
-        />
+            mustStartSpinning={mustSpin}
+            prizeNumber={prizeNumber}
+            data={dataPrizers}
+            disableInitialAnimation={true}
+            outerBorderColor="#FFFFFF"
+            outerBorderWidth={4}
+            innerBorderColor={"#f2f2f2"}
+            radiusLineColor={"tranparent"}
+            radiusLineWidth={1}
+            fontSize={16}
+            fontWeight='bold'
+            textColors={["white"]}
+            spinDuration={0.6}
+            backgroundColors={colors}
+            onStopSpinning={() => {
+              setMustSpin(false);
+              setOpen(true);
+              const option = data[prizeNumber].id
+              if (option === 1 || option === 3 || option === 4) {
+                setConfetti(true);
+              }
+            }}
+          />
         )}
 
 
@@ -116,11 +116,11 @@ export default function App() {
         GIRAR
       </Button>
 
-      
-      
+
+
 
       {/* External Link */}
-      <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/totem?cod=mero" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -134,16 +134,15 @@ export default function App() {
             </AlertDialogTitle>
             <AlertDialogDescription>
               Você ganhou um <span className="font-bold">
-              {prizers[prizeNumber].real ? prizers[prizeNumber].real : ""}
+                {prizers[prizeNumber] ? prizers[prizeNumber].real : ""}
               </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="cursor-pointer" onClick={() => {
-              setConfetti(false)
-            }}>
-              Concluir
-            </AlertDialogCancel>
+          <AlertDialogFooter >
+            <a href="https://nasaex.com/totem?cod=mero">
+              <AlertDialogCancel>
+                Concluir
+              </AlertDialogCancel>    </a>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

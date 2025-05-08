@@ -78,7 +78,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https://nasaex.com/totem?cod=pira" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/version-test/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -96,12 +96,14 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-        <AlertDialogCancel className="cursor-pointer" onClick={() => {
+        <a href="https://nasaex.com/version-test/totem?cod=Xand_bar">
+          <AlertDialogCancel className="cursor-pointer" onClick={() => {
               setOpen(false);
               setConfetti(false);
             }}>
               Continuar
             </AlertDialogCancel>
+        </a>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

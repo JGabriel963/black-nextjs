@@ -23,6 +23,8 @@ const data = [
   { id: 1, option: "MARCA PÁGINAS" },
   { id: 2, option: "CARTÕES-POSTAIS" },
   { id: 3, option: "PORTA COPOS" },
+  { id: 4, option: "POOL DAY" },
+  { id: 5, option: "VOUCHER LOUNGER" }
 ];
 
 export default function App() {

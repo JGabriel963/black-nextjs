@@ -69,13 +69,13 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isMobile, toggleSidebar } = useSidebar()
+  const { isMobile, toggleSidebar, setOpenMobile } = useSidebar()
   const pathname = usePathname()
 
 
   useEffect(() => {
-    if (isMobile) {
-      toggleSidebar()
+    if (isMobile ) {
+      setOpenMobile(false)
     }
   }, [pathname])
 
@@ -91,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <HandCoins className="h-5 w-5" />
-                <span className="text-base font-semibold">Finnance App</span>
+                <span className="text-base font-semibold">Finnance App </span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

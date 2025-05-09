@@ -13,12 +13,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import Confetti from "react-confetti";
 
+// 1 diária
+// 01 Pool Day
+// 01 Voucher Langer
+  // { id: 4, option: "01 POOL DAY" },
+  // { id: 4, option: "01 VOUCHER LANGER" },
 
 const data = [
   { id: 1, option: "MARCA PÁGINAS" },
   { id: 2, option: "CARTÕES-POSTAIS" },
   { id: 3, option: "PORTA COPOS" },
-
+  { id: 4, option: "01 DIRÁRIA" },
 ];
 
 export default function App() {
@@ -57,6 +62,7 @@ export default function App() {
             "#8F8F8F",
             "#323232",
             "#0F0F0F",
+            "#323232",
           ]}
           onStopSpinning={() => {
             setMustSpin(false);

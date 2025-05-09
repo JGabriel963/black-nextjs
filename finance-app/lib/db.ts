@@ -1,12 +1,6 @@
-// import { PrismaClient } from '../app/generated/prisma'
-// import { withAccelerate } from '@prisma/extension-accelerate'
+import 'dotenv/config';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 
-// const globalForPrisma = global as unknown as { 
-//     prisma: PrismaClient
-// }
-
-// const prisma = globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate())
-
-// if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
-// export default prisma
+const sql = neon("postgresql://default:0Nji1vzUcQGh@ep-bold-grass-a4z6lbtd-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require");
+export const db = drizzle({ client: sql });

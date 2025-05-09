@@ -75,7 +75,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https:asaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/totem?cod=mero" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -88,17 +88,20 @@ export default function App() {
               <p>Parabéns 🎉🎉</p>
             </AlertDialogTitle>
             <AlertDialogDescription>
-                <p>Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
+              <p>Você acabou de ganhar <span className="font-medium"> {data[prizeNumber].option} </span>!
               </p>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-        <AlertDialogCancel className="cursor-pointer" onClick={() => {
-              setOpen(false);
-              setConfetti(false);
-            }}>
-              Continuar
-            </AlertDialogCancel>
+            <a href="https://nasaex.com/totem?cod=mero" target="_self">
+
+              <AlertDialogCancel className="cursor-pointer" onClick={() => {
+                setOpen(false);
+                setConfetti(false);
+              }}>
+                Continuar
+              </AlertDialogCancel>
+            </a>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

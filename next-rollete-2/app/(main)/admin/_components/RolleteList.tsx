@@ -11,7 +11,7 @@ export default function RolleteList({ data }: RolleteListProps) {
   return (
     <div className='mt-2 w-full max-w-4xl px-4 gap-3 grid grid-cols-1 sm:grid-cols-3 md:grid-flow-col-4 '>
         {data.map((item, index) => (
-            <RolleteItem rollete={item} />
+            <RolleteItem key={index} rollete={item} />
         ))}
     </div>
   )

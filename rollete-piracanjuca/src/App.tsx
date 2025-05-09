@@ -15,10 +15,11 @@ import Confetti from "react-confetti";
 
 
 const data = [
-  { id: 1, option: "MARCA PÁGINAS" },
-  { id: 2, option: "CARTÕES-POSTAIS" },
-  { id: 3, option: "PORTA COPOS" },
-
+  { id: 1, option: "CAJUÍNA" },
+  { id: 2, option: "VINHO DE CAJU" },
+  { id: 3, option: "CACHAÇA DE CAJU" },
+  { id: 4, option: "CASTANHA DE CAJU" },
+  { id: 5, option: "PC IBIAPABA" },
 ];
 
 export default function App() {
@@ -36,7 +37,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r bg-neutral-950 relative">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#314367] to-[#2B3856] relative">
       <div className="relative">
         <Wheel
           mustStartSpinning={mustSpin}
@@ -54,9 +55,11 @@ export default function App() {
           fontWeight="bold"
           spinDuration={0.6}
           backgroundColors={[
-            "#8F8F8F",
-            "#323232",
-            "#0F0F0F",
+            "#60a5fa",
+            "oklch(63.7% 0.237 25.331)",
+            "oklch(90.5% 0.182 98.111)",
+            "#60a5fa",
+            "#64b031",
           ]}
           onStopSpinning={() => {
             setMustSpin(false);
@@ -75,7 +78,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https:asaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/version-test/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -93,12 +96,14 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-        <AlertDialogCancel className="cursor-pointer" onClick={() => {
+        <a href="https://nasaex.com/version-test/totem?cod=Xand_bar">
+          <AlertDialogCancel className="cursor-pointer" onClick={() => {
               setOpen(false);
               setConfetti(false);
             }}>
               Continuar
             </AlertDialogCancel>
+        </a>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

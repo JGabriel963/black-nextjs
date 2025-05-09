@@ -1,9 +1,17 @@
 "use client"
 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from '@/components/ui/input'
+import { Checkbox } from "@/components/ui/checkbox"
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import Block from '@uiw/react-color-block'
 import { Button } from '@/components/ui/button'
 import createPrize from '@/app/actions/create-prize'
 import { toast } from 'sonner'
@@ -15,13 +23,17 @@ const formSchema = z.object({
   title: z.string().min(1, {
     message: "Campo não pode ser vazio!",
   }),
-  color: z.string().optional(),
-  isPrize: z.boolean().optional(),
-  repeat: z.boolean().optional(),
-  quantity: z.number().optional(),
+  color: z.string(),
+  isPrize: z.boolean(),
+  repeat: z.boolean(),
+  quantity: z.number(),
 });
 
-export default function AddItemForm() {
+interface AddItemFormProps {
+  params: string
+}
+
+export default function AddItemForm({ params }: AddItemFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,79 +46,114 @@ export default function AddItemForm() {
 
   })
 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    "use server"
 
-  const params = useParams<{ id: string }>()
-  const [blockOpen, setBlockOpen] = useState(false)
-  const router = useRouter()
+    let prize
 
-   async function handleSubmit() {
     try {
-      const prize = await createPrize({
-        name: title,
-        rolleteId: params.id,
-        color: color,
-        isPrize: isPrize,
-        repeat: repeat,
-        quantity: quantity
-
+      prize = await createPrize({
+        name: values.title,
+        color: values.color,
+        isPrize: values.isPrize,
+        quantity: values.quantity,
+        repeat: values.repeat,
+        rolleteId: params
       })
       toast.success("Prêmio adicionado com sucesso!")
-      router.refresh()
+      
     } catch (error) {
-      console.log("Error: ", error)
+      console.log(error)
       toast.error("Erro ao adicionar prêmio!")
     }
+
+    return prize
   }
 
 
 
   return (
     <div className="flex flex-col w-full">
-        <div className='flex items-center gap-3 relative'>
-        <Input />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite aqui..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div onClick={() => setBlockOpen(!blockOpen)}  className={`size-9 border-[1px] cursor-pointer rounded-sm`} style={{ backgroundColor: color }} />
+        <div className="flex justify-between gap-4 items-center">
+          <div className="flex gap-4">
+            <FormField
+              control={form.control}
+              name="isPrize"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Prêmio</FormLabel>
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked === true)} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {blockOpen ? (
-            <Block
-            color={color}
-            onChange={(color) => {
-              setColor(color.hex)
-              setBlockOpen(false)
-            }}
-            style={{
-              position: 'absolute',
-              zIndex: 2,
-              top: 50,
-              right: -70,
-            }}
-          />
-          ): null}
-            
-      </div>
-      <div className='flex items-center justify-between gap-3 mt-4'>
-        <div className='flex items-center gap-3'>
-          <label className='flex items-center gap-2'>
-            <input type="checkbox" checked={isPrize} onChange={() => setIsPrize(!isPrize)} className='w-4 h-4' />
-            <span>É um prêmio?</span>
-          </label>
-          <label className='flex items-center gap-2'>
-            <input type="checkbox" checked={repeat} onChange={() => setRepeat(!repeat)} className='w-4 h-4' />
-            <span>Repetir?</span>
-          </label>
+            <FormField
+              control={form.control}
+              name="repeat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Repetir</FormLabel>
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked === true)} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex">
+          <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem className="flex gap-4 items-center">
+                  <FormLabel>Quantidade:</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+        <FormField
+              control={form.control}
+              name="color"
+              render={({ field }) => (
+                <FormItem className="flex gap-4 items-center">
+                  <FormLabel>Cor:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="#FFFFFF" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+          </div>
         </div>
-        <div>
-          <label className='flex items-center gap-2'>
-            <span>Quantidade:</span>
-            <input type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className='w-16 h-8 border border-gray-300 rounded-md px-2' />
-          </label>
-        </div>
-      </div>
-      <div>
-        <Button className='w-full mt-4' onClick={handleSubmit}>
-          Adicionar
-        </Button>
-      </div>
+        <Button type="submit">Concluir</Button>
+        </form>
+      </Form>
     </div>
   )
 }

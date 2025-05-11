@@ -12,7 +12,6 @@ interface BudgetItemProps {
 }
 
 export default function BudgetItem({ data }: BudgetItemProps) {
-  const pathname = usePathname();
   const {
     setNodeRef,
     attributes,
@@ -39,7 +38,7 @@ export default function BudgetItem({ data }: BudgetItemProps) {
         ref={setNodeRef}
         style={style}
         className={cn(
-          "px-5 py-10 border-2 rounded-lg hover:shadow-md cursor-pointer bg-white opacity-60 border-primary/40",
+          "px-5 py-10 border-2 rounded-lg hover:shadow-md cursor-pointer bg-white opacity-60 border-primary/40 touch-none",
         )}
       >
         <div className="flex gap-2 items-center opacity-0">
@@ -72,15 +71,14 @@ export default function BudgetItem({ data }: BudgetItemProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className={cn(
-        "px-5 py-10 border rounded-lg hover:shadow-md cursor-pointer bg-white",
-        isDragging && "z-50"
-      )}
+      className={
+        "px-5 py-10 border rounded-lg hover:shadow-md cursor-pointer bg-white touch-none"
+      }
     >
       <div className="flex gap-2 items-center">
         <Grip
           className={cn(
-            "text-slate-400 cursor-grab outline-none",
+            "text-slate-400 cursor-grab outline-none touch-manipulation",
             isDragging && "cursor-grabbing outline-none"
           )}
           {...listeners}

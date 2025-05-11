@@ -12,25 +12,31 @@ import {
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
-import {
-  restrictToWindowEdges,
-  restrictToVerticalAxis
-} from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 
 export default function BudgetsList() {
   const { user } = useUser();
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+  const pointerSensor = useSensor(PointerSensor);
+
+  const sensors = useSensors(
+    touchSensor,
+    keyboardSensor,
+    pointerSensor
+  )
   const [budgerList, setBudgerList] = useState<Budget[]>([]);
   const budgersIds = useMemo(
     () => budgerList.map((item) => item.id),
     [budgerList]
   );
   const [activeCard, setActiveCard] = useState<Budget | null>(null);
-
-  useEffect(() => {
-    getBudgerList();
-  }, [user]);
 
   const getBudgerList = async () => {
     const budgets = await db
@@ -81,9 +87,13 @@ export default function BudgetsList() {
     }
   };
 
+  useEffect(() => {
+    getBudgerList();
+  }, [user]);
+
   return (
     <div className="mt-7">
-      <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart} sensors={sensors}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <CreateNewBudget refreshList={() => getBudgerList()} />
           <SortableContext items={budgersIds}>

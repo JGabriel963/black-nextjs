@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Bug, Plus } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -20,6 +20,7 @@ import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import EmojiPicker  from "emoji-picker-react";
 import { useRouter } from "next/navigation";
+import { desc, eq, getTableColumns } from "drizzle-orm";
 
 interface CreateNewBudgetProps {
   refreshList: () => void;
@@ -35,12 +36,24 @@ export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
 
   const onCreateBudget = async () => {
     try {
+
+      const lastBudget = await db.select({
+        ...getTableColumns(Budgets)
+      })
+      .from(Budgets)
+      .orderBy(desc(Budgets.order))
+      .limit(1)
+      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress!));
+
+      const newOrder = lastBudget[0] ? lastBudget[0].order + 1 : 0
+
       const budget = await db
         .insert(Budgets)
         .values({
           name: name,
           amount: amount,
           icon: emoji,
+          order: newOrder,
           createdBy: user?.primaryEmailAddress?.emailAddress!,
         })
         .returning({ name: Budgets.name });

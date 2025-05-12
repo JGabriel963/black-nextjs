@@ -72,13 +72,13 @@ export default function BudgetItem({ data }: BudgetItemProps) {
       ref={setNodeRef}
       style={style}
       className={
-        "px-5 py-10 border rounded-lg hover:shadow-md cursor-pointer bg-white touch-none"
+       cn( "px-5 py-10 border rounded-lg hover:shadow-md cursor-pointer bg-white")
       }
     >
       <div className="flex gap-2 items-center">
         <Grip
           className={cn(
-            "text-slate-400 cursor-grab outline-none touch-manipulation",
+            "text-slate-400 cursor-grab outline-none touch-none",
             isDragging && "cursor-grabbing outline-none"
           )}
           {...listeners}
@@ -86,13 +86,13 @@ export default function BudgetItem({ data }: BudgetItemProps) {
         />
         <Link
           href={`/fontes/${data.id}`}
-          className="flex gap-2 items-center w-full"
+          className="flex gap-2 items-center w-full group"
         >
           <h2 className="text-2xl p-3 bg-slate-100 rounded-full">
             {data.icon}
           </h2>
           <div>
-            <h2 className="font-bold"> {data.name} </h2>
+            <h2 className="font-bold group-hover:text-primary"> {data.name} </h2>
             <p className="text-slate-500 text-sm"> {data.amount} </p>
           </div>
         </Link>

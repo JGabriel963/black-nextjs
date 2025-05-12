@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useUser } from "@clerk/nextjs"
 import { useAuth } from "@clerk/clerk-react"
+import { useRouter } from "next/navigation"
 
 
 
@@ -37,6 +38,7 @@ export function NavUser() {
   const { isMobile } = useSidebar()
   const { user } = useUser()
   const { signOut } = useAuth()
+  const router = useRouter()
 
   return (
     <SidebarMenu>
@@ -82,23 +84,19 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/account")} className="cursor-pointer">
                 <UserCircleIcon />
-                Account
+                Conta
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <BellIcon />
-                Notifications
+                Notificações
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
               <LogOutIcon />
-              Log out
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -12,8 +12,8 @@ export default function Header() {
         <SidebarTrigger className="" />
         <Separator orientation='vertical' className="mx-2 data-[orientation=vertical]:h-4" />
         <div className='w-full flex'>
-            <h3 className='font-semibold'>
-                {pathname.split("/")[1].toUpperCase()}
+            <h3 className='font-semibold capitalize'>
+                {pathname.split("/")[1]}
             </h3>
         </div>
     </header>

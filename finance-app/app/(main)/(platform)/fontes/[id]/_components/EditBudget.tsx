@@ -1,6 +1,6 @@
 "use client";
 
-import { Bug, LoaderCircle, Plus } from "lucide-react";
+import { Bug, LoaderCircle, Pencil, Plus } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -12,71 +12,57 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { Budgets } from "@/schema";
-import { useUser } from "@clerk/nextjs";
+import { Budget, Budgets } from "@/schema";
 import { toast } from "sonner";
 import EmojiPicker  from "emoji-picker-react";
-import { useRouter } from "next/navigation";
-import { desc, eq, getTableColumns } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
-interface CreateNewBudgetProps {
-  refreshList: () => void;
+interface EditBudgetProps {
+  data: Budget | null;
+  refreshData: () => void
 }
 
-export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
-  const [emoji, setEmoji] = useState("😊");
+export default function EditBudget({ data, refreshData }: EditBudgetProps) {
+  const [emoji, setEmoji] = useState(data?.icon);
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false)
-  const { user } = useUser();
 
-  const onCreateBudget = async () => {
+  const onUpdateBudget = async () => {
     setLoading(true)
     try {
+        const result = await db.update(Budgets)
+        .set({ name, amount, icon: emoji })
+        .where(eq(Budgets.id, data?.id!))
+        .returning()
 
-      const lastBudget = await db.select({
-        ...getTableColumns(Budgets)
-      })
-      .from(Budgets)
-      .orderBy(desc(Budgets.order))
-      .limit(1)
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress!));
-
-      const newOrder = lastBudget[0] ? lastBudget[0].order + 1 : 0
-
-      const budget = await db
-        .insert(Budgets)
-        .values({
-          name: name,
-          amount: amount,
-          icon: emoji,
-          order: newOrder,
-          createdBy: user?.primaryEmailAddress?.emailAddress!,
-        })
-        .returning({ name: Budgets.name });
-      toast.success("Lançamento criado com sucesso!");
-      setName("");
-      setAmount("");
-      setLoading(false)
-      refreshList();
+        toast.success("Atualizado com sucesso!")
+        setLoading(false)
+        refreshData()
     } catch (error) {
-      console.error("Error creating budget:", error);
+      console.log("Error", error)
       setLoading(false)
-      toast.error("Erro ao criar lançamento. Tente novamente.");
+      toast.error("Erro ao tentar atualizar!")
     }
   };
+
+  useEffect(() => {
+    setEmoji(data?.icon);
+    setName(data?.name!);
+    setAmount(data?.amount!)
+    
+  }, [data])
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed p-10 bg-slate-100 hover:shadow-md cursor-pointer font-semibold text-slate-600">
-          <Plus />
-          Nova Fonte
-        </div>
+        <Button variant={"secondary"} >
+            <Pencil /> <p className="hidden sm:block">Editar</p>
+          </Button>
       </DialogTrigger>
       <DialogContent className="rounded-md">
         <DialogHeader>
@@ -97,6 +83,7 @@ export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
             <div className="flex flex-col items-start">
               <h2 className="font-bold my-2">Nome</h2>
               <Input
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Cortes de cabelo"
               />
@@ -106,6 +93,7 @@ export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
               <Input
                 type="number"
                 min={0}
+                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="100,00"
               />
@@ -114,7 +102,7 @@ export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild className="w-full">
-            <Button disabled={!(name&&amount)} onClick={onCreateBudget}> {loading ? (
+            <Button disabled={!(name&&amount)} onClick={onUpdateBudget}>{loading ? (
                 <>
                     <LoaderCircle className="animate-spin" /> 
                     Carregando...

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   ClerkProvider
 } from '@clerk/nextjs'
+import { ptBR } from '@clerk/localizations'
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
@@ -28,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={ptBR}>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

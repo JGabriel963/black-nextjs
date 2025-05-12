@@ -19,9 +19,11 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function BudgetsList() {
   const { user } = useUser();
+  const [loading, setLoading] = useState(false)
   const touchSensor = useSensor(TouchSensor);
   const keyboardSensor = useSensor(KeyboardSensor);
   const pointerSensor = useSensor(PointerSensor);
@@ -88,7 +90,13 @@ export default function BudgetsList() {
   };
 
   useEffect(() => {
-    getBudgerList();
+    setLoading(true)
+    try {
+      getBudgerList();
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
   }, [user]);
 
   return (
@@ -96,11 +104,13 @@ export default function BudgetsList() {
       <DndContext onDragEnd={onDragEnd} onDragStart={onDragStart} sensors={sensors}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <CreateNewBudget refreshList={() => getBudgerList()} />
-          <SortableContext items={budgersIds}>
+          {!loading ? <SortableContext items={budgersIds}>
             {budgerList.map((buget, index) => (
               <BudgetItem data={buget} key={index} />
             ))}
-          </SortableContext>
+          </SortableContext> : [1,2,3,4,5].map((i) => (
+            <Skeleton key={i} className="w-full h-[150px] bg-slate-200" />
+          ))}
         </div>
 
         <DragOverlay>

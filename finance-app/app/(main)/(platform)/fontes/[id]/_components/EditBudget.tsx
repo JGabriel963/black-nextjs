@@ -15,13 +15,13 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { Budget, Budgets } from "@/schema";
+import { BudgetType, Budgets } from "@/schema";
 import { toast } from "sonner";
 import EmojiPicker  from "emoji-picker-react";
 import { eq } from "drizzle-orm";
 
 interface EditBudgetProps {
-  data: Budget | null;
+  data: BudgetType | null;
   refreshData: () => void
 }
 
@@ -89,7 +89,7 @@ export default function EditBudget({ data, refreshData }: EditBudgetProps) {
               />
             </div>
             <div className="flex flex-col items-start">
-              <h2 className="font-bold my-2">Valor</h2>
+              <h2 className="font-bold my-2">Meta</h2>
               <Input
                 type="number"
                 min={0}

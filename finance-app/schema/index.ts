@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import { date, integer, numeric, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const Budgets = pgTable("budgets", {
     id: serial('id').primaryKey(),
@@ -9,4 +9,14 @@ export const Budgets = pgTable("budgets", {
     createdBy: varchar('created_by').notNull(),
 })
 
-export type Budget = typeof Budgets.$inferSelect;
+export type BudgetType = typeof Budgets.$inferSelect;
+
+export const Entries = pgTable('entries', {
+    id: serial('id').primaryKey(),
+    name: varchar('name').notNull(),
+    amount: numeric('amount').notNull(),
+    budgetId: integer('budgetId').references(() => Budgets.id, { onDelete: 'cascade' }),
+    createdAt: date({ mode: "date" }).defaultNow()
+})
+
+export type EntrieType = typeof Entries.$inferSelect;

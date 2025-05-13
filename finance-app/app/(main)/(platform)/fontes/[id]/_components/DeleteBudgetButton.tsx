@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { Budget, Budgets } from "@/schema";
+import { BudgetType, Budgets } from "@/schema";
 import { eq } from "drizzle-orm";
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 interface DeleteBudgetProps {
-  data: Budget | null;
+  data: BudgetType | null;
 }
 
 export function DeleteBudgetButton({ data }: DeleteBudgetProps) {

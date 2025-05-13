@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Budget } from "@/schema";
+import { BudgetType } from "@/schema";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Grid, Grip } from "lucide-react";
@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 interface BudgetItemProps {
-  data: Budget;
+  data: BudgetType;
 }
 
 export default function BudgetItem({ data }: BudgetItemProps) {

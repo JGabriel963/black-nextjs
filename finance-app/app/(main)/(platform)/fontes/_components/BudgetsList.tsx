@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CreateNewBudget from "./CreateNewBudget";
 import { db } from "@/lib/db";
-import { Budget, Budgets } from "@/schema";
+import { BudgetType, Budgets } from "@/schema";
 import { asc, eq, getTableColumns } from "drizzle-orm";
 import { useUser } from "@clerk/nextjs";
 import BudgetItem from "./BudgetItem";
@@ -33,12 +33,12 @@ export default function BudgetsList() {
     keyboardSensor,
     pointerSensor
   )
-  const [budgerList, setBudgerList] = useState<Budget[]>([]);
+  const [budgerList, setBudgerList] = useState<BudgetType[]>([]);
   const budgersIds = useMemo(
     () => budgerList.map((item) => item.id),
     [budgerList]
   );
-  const [activeCard, setActiveCard] = useState<Budget | null>(null);
+  const [activeCard, setActiveCard] = useState<BudgetType | null>(null);
 
   const getBudgerList = async () => {
     const budgets = await db
@@ -62,7 +62,7 @@ export default function BudgetsList() {
 
     if (activeColumnId === overColumnId) return;
 
-    let items: Budget[] = [];
+    let items: BudgetType[] = [];
 
     setBudgerList((cards) => {
       const activeCardIndex = cards.findIndex(
@@ -75,12 +75,14 @@ export default function BudgetsList() {
       return items;
     });
 
-    items.map(async (card, index) => {
+    await Promise.all(
+      items.map(async (card, index) => {
       await db
         .update(Budgets)
         .set({ order: index })
         .where(eq(Budgets.id, card.id));
-    });
+    })
+    )
   };
 
   const onDragStart = async (event: DragStartEvent) => {

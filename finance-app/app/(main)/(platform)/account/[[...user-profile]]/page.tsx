@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function AccountPage() {
   return (
-    <div className='h-full flex w-full p-10'>
+    <div className='h-full flex items-center justify-center sm:justify-start w-full p-10'>
         <UserProfile />
     </div>
   )

@@ -102,7 +102,7 @@ export default function CreateNewBudget({ refreshList }: CreateNewBudgetProps) {
               />
             </div>
             <div className="flex flex-col items-start">
-              <h2 className="font-bold my-2">Valor</h2>
+              <h2 className="font-bold my-2">Meta</h2>
               <Input
                 type="number"
                 min={0}

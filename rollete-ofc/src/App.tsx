@@ -113,7 +113,7 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            {alert[prizeNumber].repeat ?
+             {/* {alert[prizeNumber].repeat ?
               <AlertDialogCancel className="cursor-pointer" onClick={() => {
                 setOpen(false);
                 setConfetti(false);
@@ -127,7 +127,13 @@ export default function App() {
                   Continuar
                 </AlertDialogCancel>
               </a>
-            }
+            } */}
+            <AlertDialogCancel className="cursor-pointer" onClick={() => {
+                setOpen(false);
+                setConfetti(false);
+              }}>
+                Continuar
+              </AlertDialogCancel>
 
           </AlertDialogFooter>
         </AlertDialogContent>

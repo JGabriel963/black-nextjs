@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { Button } from "./components/ui/button";
 import { ExternalLink } from 'lucide-react'
@@ -13,21 +13,30 @@ import {
 } from "@/components/ui/alert-dialog";
 import Confetti from "react-confetti";
 
-const alert = [
-  { id: 1, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "BRINDE", confetti: true, repeat: false },
+interface Prizes {
+  id: number;
+  title: string;
+  message: string;
+  prize?: string;
+  confetti: boolean;
+  repeat: boolean
+}
+
+const alert: Prizes[] = [
+  { id: 1, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "DESCONTO DE 5%", confetti: true, repeat: false },
   { id: 2, title: "Talvez na próxima", message: "Você pode tentar novamente", prize: "", confetti: false, repeat: true },
-  { id: 3, title: "Que pena!", message: "Infelismente não foi dessa vez!", prize: "", confetti: false, repeat: false },
-  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "1 INGRESSO", confetti: true, repeat: false },
+  { id: 3, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "BRINDE", confetti: true, repeat: false },
+  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "DESCONTO DE 10%", confetti: true, repeat: false },
   { id: 5, title: "Que pena!", message: "Infelismente não foi dessa vez!", prize: "", confetti: false, repeat: false },
 
 ]
 
 const data = [
-  { id: 1, option: "1 BRINDE" },
+  { id: 1, option: "DESCONTO 5%" },
   { id: 2, option: "TENTE NOVAMENTE" },
-  { id: 3, option: "PERDEU A VEZ" },
-  { id: 4, option: "1 INGRESSO" },
-  { id: 5, option: "PERDEU A VEZ" },
+  { id: 3, option: "BRINDE" },
+  { id: 4, option: "DESCONTO 10%" },
+  { id: 5, option: "PASSOU A VEZ" },
 ];
 
 export default function App() {
@@ -35,7 +44,7 @@ export default function App() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [confetti, setConfetti] = useState(false);
-
+  
   const handleSpinClick = () => {
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * data.length);

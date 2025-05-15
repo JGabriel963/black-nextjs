@@ -15,6 +15,7 @@ import BudgetInfo from "./_components/BudgetInfo";
 import { DeleteBudgetButton } from "./_components/DeleteBudgetButton";
 import AddEntrieForm from "./_components/AddEntrieForm";
 import EntriesList from "./_components/EntriesList";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface SourcePageProps {
   params: {
@@ -47,8 +48,6 @@ export default function SourcePage({ params }: SourcePageProps) {
       eq(Budgets.id, Number(params.id))
     ))
     .groupBy(Budgets.id)
-
-    console.log(gudget)
     
     setBudgtedItem(gudget[0]);
     getEntriesList()
@@ -83,7 +82,7 @@ export default function SourcePage({ params }: SourcePageProps) {
       </div>
 
       <div className="w-full flex flex-col sm:flex-row justify-between gap-4 mt-4">
-        {budgetItem && <BudgetInfo data={budgetItem} />}
+        {budgetItem ? <BudgetInfo data={budgetItem} /> : <Skeleton className="w-full h-[150px] bg-slate-200" />}
         <AddEntrieForm refreshData={getBudgetItem} budgetId={params.id} />
       </div>
       <div className="mt-7">

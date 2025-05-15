@@ -16,7 +16,8 @@ export const Entries = pgTable('entries', {
     name: varchar('name').notNull(),
     amount: numeric('amount').notNull(),
     budgetId: integer('budgetId').references(() => Budgets.id, { onDelete: 'cascade' }),
-    createdAt: date({ mode: "date" }).defaultNow()
+    createdAt: date({ mode: "date" }).defaultNow(),
+    createdBy: varchar('created_by').notNull()
 })
 
 export type EntrieType = typeof Entries.$inferSelect;

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 import { Entries } from "@/schema";
+import { useUser } from "@clerk/nextjs";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react"
 import { toast } from "sonner";
@@ -13,6 +14,7 @@ interface AddEntrieFormProps {
 
 
 export default function AddEntrieForm({ refreshData, budgetId }: AddEntrieFormProps) {
+    const { user } = useUser()
     const [name, setName] = useState("");
     const [amount, setAmount] = useState("");
     const [loading, setLoading] = useState(false)
@@ -23,7 +25,8 @@ export default function AddEntrieForm({ refreshData, budgetId }: AddEntrieFormPr
             const result = await db.insert(Entries).values({
                 name: name,
                 amount: amount,
-                budgetId: Number(budgetId)
+                budgetId: Number(budgetId),
+                createdBy: user?.primaryEmailAddress?.emailAddress!
             })
             .returning()
             toast.success("Entrada adicionada!")

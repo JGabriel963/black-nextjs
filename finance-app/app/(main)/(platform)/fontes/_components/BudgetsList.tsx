@@ -92,12 +92,19 @@ export default function BudgetsList() {
   };
 
   useEffect(() => {
-    setLoading(true)
-    try {
-      getBudgerList();
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        await getBudgerList();
+      } catch (error) {
+        console.log("Error", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (user?.primaryEmailAddress?.emailAddress) {
+      fetchData()
     }
   }, [user]);
 

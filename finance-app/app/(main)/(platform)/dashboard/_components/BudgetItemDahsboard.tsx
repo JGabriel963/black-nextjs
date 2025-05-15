@@ -5,7 +5,7 @@ interface BudgetItemProps {
   data: BudgetItem;
 }
 
-export default function BudgetInfo({ data }: BudgetItemProps) {
+export default function BudgetItemDahsboard({ data }: BudgetItemProps) {
 
   const calculateProgressPerc = () => {
     const perc = (data.totalSpend/Number(data.amount))*100;
@@ -14,7 +14,7 @@ export default function BudgetInfo({ data }: BudgetItemProps) {
 
 
   return (
-    <div className={"px-5 py-10 border rounded-lg bg-white w-full h-[150px]"}>
+    <div className={"px-5 py-10 border rounded-lg bg-white w-full h-fit"}>
       <div className="flex gap-2 items-center">
         <div className="flex gap-2 items-center w-full">
           <h2 className="text-2xl p-3 bg-slate-100 rounded-full">

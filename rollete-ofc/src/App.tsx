@@ -33,7 +33,7 @@ const alert: Prizes[] = [
 
 const data = [
   { id: 1, option: "DESCONTO 5%" },
-  { id: 2, option: "TENTE NOVAMENTE" },
+  { id: 2, option: "DESCONTO 15%" },
   { id: 3, option: "BRINDE" },
   { id: 4, option: "DESCONTO 10%" },
   { id: 5, option: "PASSOU A VEZ" },

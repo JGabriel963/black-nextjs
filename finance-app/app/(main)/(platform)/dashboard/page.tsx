@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { BarChartDahsboard } from "./_components/BarChart";
 import BudgetItemDahsboard from "./_components/BudgetItemDahsboard";
 import EntriesList from "../fontes/[id]/_components/EntriesList";
+import DateFilter from "./_components/DateFilter";
 
 export interface BudgetItem extends BudgetType {
   totalSpend: number;
@@ -78,6 +79,9 @@ export default function DashboardPage() {
       <p className="text-gray-500">
         Aqui está o que você está gerando de resultados ✌️
       </p>
+      <div className="mt-4">
+        <DateFilter />
+      </div>
 
       <div className="w-full border rounded-lg h-[150px] mt-4 flex items-center justify-between px-5 py-10">
         <div className="flex flex-col">

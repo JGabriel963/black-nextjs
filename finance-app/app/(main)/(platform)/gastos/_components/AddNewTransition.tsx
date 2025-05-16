@@ -31,6 +31,9 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon, Plus, PlusCircle } from "lucide-react";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+
+const category = ["🏠 Moradia", "🛒 Alimentação", "🚗 Transporte", "💡 Serviços e Utilidades", "🏥 Saúde", "📚 Educação", "👨‍👩‍👧‍👦 Despesas com Filhos", "👕 Vestuário", "💅 Cuidado pessoal", "🎉 Lazer e Entretenimento", "🧾 Outras Despesas"]
 
 export function AddNewTransition() {
   const [date, setDate] = useState<Date>();
@@ -38,12 +41,12 @@ export function AddNewTransition() {
   const [isIncome, setIsIncome] = useState(false)
 
   const onReverseValue = () => {
-        if (!value) return;
+    if (!value) return;
 
-        const newValue = parseFloat(value) * -1;
-        setIsIncome(!isIncome)
-        setValue(newValue.toString())
-        
+    const newValue = parseFloat(value) * -1;
+    setIsIncome(!isIncome)
+    setValue(newValue.toString())
+
   }
   return (
     <Sheet>
@@ -95,31 +98,29 @@ export function AddNewTransition() {
             <h2 className="my-1 text-sm text-black font-medium">Categoria</h2>
             <Select>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a fruit" />
+                <SelectValue placeholder="Select uma categoria" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  {category.map((item) => (
+                    <SelectItem value={item}> {item} </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
           <div>
-            <h2 className="my-1 text-sm text-black font-medium">Categoria</h2>
+            <h2 className="my-1 text-sm text-black font-medium">Valor</h2>
             <div className="flex gap-3 items-center relative">
-                <button
-                    onClick={onReverseValue}
+              <button
+                onClick={onReverseValue}
                 className={cn(
-                    "bg-emerald-500 hover:bg-emerald-500/80 absolute top-1.5 left-1.5 rounded-md p-2 flex items-center justify-center transition",
-                    isIncome && "bg-rose-500 hover:bg-rose-500/80"
+                  "bg-emerald-500 hover:bg-emerald-500/80 absolute top-1.5 left-1.5 rounded-md p-2 flex items-center justify-center transition",
+                  isIncome && "bg-rose-500 hover:bg-rose-500/80"
                 )}>
-                    <PlusCircle className="size-3 text-white" />
-                </button>
-                <CurrencyInput
+                <PlusCircle className="size-3 text-white" />
+              </button>
+              <CurrencyInput
                 prefix="R$"
                 placeholder="R$ 0,00"
                 decimalSeparator=","
@@ -127,9 +128,24 @@ export function AddNewTransition() {
                 value={value}
                 onValueChange={(value) => setValue(value!)}
                 className="pl-10 flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-            />
-          </div>
+              />
             </div>
+            <span
+              className={cn(
+                "text-sm text-emerald-500",
+                isIncome && "text-rose-500"
+              )}
+            >
+                {isIncome ? "Valor de saída" : "Valor de entrada"}
+            </span>
+          </div>
+          <div>
+            <h2 className="my-1 text-sm text-black font-medium">Descrição</h2>
+            <Textarea placeholder="Eduardo..." />
+          </div>
+          <Button>
+            Adicionar
+          </Button>
         </div>
       </SheetContent>
     </Sheet>

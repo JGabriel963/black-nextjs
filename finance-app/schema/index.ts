@@ -1,4 +1,4 @@
-import { date, integer, numeric, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { date, integer, numeric, pgEnum, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const Budgets = pgTable("budgets", {
     id: serial('id').primaryKey(),
@@ -19,5 +19,20 @@ export const Entries = pgTable('entries', {
     createdAt: date({ mode: "date" }).defaultNow(),
     createdBy: varchar('created_by').notNull()
 })
+
+
+export const typeTransaction = pgEnum('type_transaction', ['income', 'expense'])
+
+export const Transactions = pgTable('transactions', {
+    id: serial('id').primaryKey(),
+    name: varchar('name').notNull(),
+    description: text(),
+    category: varchar('category').notNull(),
+    amount: varchar("amount").notNull(),
+    type: typeTransaction(),
+    date: timestamp({ mode: "date" }).notNull(),
+    createdBy: varchar('created_by').notNull()
+})
+
 
 export type EntrieType = typeof Entries.$inferSelect;

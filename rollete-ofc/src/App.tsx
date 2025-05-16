@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { Button } from "./components/ui/button";
 import { ExternalLink } from 'lucide-react'
@@ -44,7 +44,7 @@ export default function App() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [confetti, setConfetti] = useState(false);
-  
+
   const handleSpinClick = () => {
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * data.length);
@@ -95,7 +95,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https://nasaex.com/totem?cod=Xand_bar" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/version-test/totem-principioativo?cod=principio" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -113,7 +113,7 @@ export default function App() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-             {/* {alert[prizeNumber].repeat ?
+            {/* {alert[prizeNumber].repeat ?
               <AlertDialogCancel className="cursor-pointer" onClick={() => {
                 setOpen(false);
                 setConfetti(false);
@@ -128,12 +128,14 @@ export default function App() {
                 </AlertDialogCancel>
               </a>
             } */}
-            <AlertDialogCancel className="cursor-pointer" onClick={() => {
+            <a href="https://nasaex.com/version-test/totem-principioativo?cod=principio">
+              <AlertDialogCancel className="cursor-pointer" onClick={() => {
                 setOpen(false);
                 setConfetti(false);
               }}>
                 Continuar
               </AlertDialogCancel>
+            </a>
 
           </AlertDialogFooter>
         </AlertDialogContent>

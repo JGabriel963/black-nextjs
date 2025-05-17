@@ -34,6 +34,10 @@ export default function DateFilter() {
             from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
             to: format(dateRange?.to || defaultTo, "yyyy-MM-dd")
         };
+
+        const url = `${pathname}?from=${query.from}&to=${query.to}`
+
+        router.push(url)
  
     }
 
@@ -72,6 +76,7 @@ export default function DateFilter() {
                     disabled={!date?.from || !date?.to}
                     className='w-full'
                     variant='outline'
+                    onClick={() => pushToUrl(date)}
                 >
                     Aplicar
                 </Button>

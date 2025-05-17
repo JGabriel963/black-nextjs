@@ -162,8 +162,8 @@ export function AddNewTransition({ fetchData }: AddNewTransitionProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {category.map((item) => (
-                    <SelectItem value={item}> {item} </SelectItem>
+                  {category.map((item, key) => (
+                    <SelectItem value={item} key={key}> {item} </SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>

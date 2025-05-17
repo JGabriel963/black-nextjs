@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput from "react-currency-input-field";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
@@ -29,29 +29,85 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CalendarIcon, Plus, PlusCircle } from "lucide-react";
+import { CalendarIcon, LoaderCircle, Plus, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { db } from "@/lib/db";
+import { Transactions } from "@/schema";
+import { useUser } from "@clerk/nextjs";
 
-const category = ["🏠 Moradia", "🛒 Alimentação", "🚗 Transporte", "💡 Serviços e Utilidades", "🏥 Saúde", "📚 Educação", "👨‍👩‍👧‍👦 Despesas com Filhos", "👕 Vestuário", "💅 Cuidado pessoal", "🎉 Lazer e Entretenimento", "🧾 Outras Despesas"]
+const category = [
+  "🏠 Moradia",
+  "🛒 Alimentação",
+  "🚗 Transporte",
+  "💡 Serviços e Utilidades",
+  "🏥 Saúde",
+  "📚 Educação",
+  "👨‍👩‍👧‍👦 Despesas com Filhos",
+  "👕 Vestuário",
+  "💅 Cuidado pessoal",
+  "🎉 Lazer e Entretenimento",
+  "🧾 Outras Despesas",
+];
 
-export function AddNewTransition() {
+interface AddNewTransitionProps {
+  fetchData: () => void
+}
+
+export function AddNewTransition({ fetchData }: AddNewTransitionProps) {
+  const { user } = useUser()
+  const [name, setName] = useState("");
+  const [categoryItem, setCategoryItem] = useState("");
   const [date, setDate] = useState<Date>();
-  const [value, setValue] = useState("")
-  const [isIncome, setIsIncome] = useState(false)
+  const [value, setValue] = useState("");
+  const [description, setDescription] = useState("");
+  const [isIncome, setIsIncome] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(false) 
 
   const onReverseValue = () => {
     if (!value) return;
 
     const newValue = parseFloat(value) * -1;
-    setIsIncome(!isIncome)
-    setValue(newValue.toString())
+    setIsIncome(!isIncome);
+    setValue(newValue.toString());
+  };
 
-  }
+  const onCreateTransaction = async () => {
+    setLoading(true)
+    try {
+      const transaction = await db.insert(Transactions)
+      .values({
+        name: name!,
+        category: categoryItem!,
+        date: date,
+        amount: value,
+        createdBy: user?.primaryEmailAddress?.emailAddress!,
+        description: description,
+        type: isIncome ? "expense" : "income",
+      })
+      setOpen(false)
+      setName("")
+      setDescription("")
+      setDate(undefined)
+      setCategoryItem("")
+      setValue("")
+      setLoading(false)
+      setIsIncome(false)
+      toast.success("Criado com sucesso!")
+      fetchData()
+    } catch (error) {
+      console.log("Error", error);
+      setLoading(false)
+      toast.error("Erro ao criar transação");
+    }
+  };
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button className="">
+        <Button>
           <Plus />
           Adicionar
         </Button>
@@ -91,12 +147,16 @@ export function AddNewTransition() {
           </Popover>
           <div>
             <h2 className="my-1 text-sm text-black font-medium">Nome</h2>
-            <Input placeholder="Eduardo..." />
+            <Input
+              placeholder="Eduardo..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
 
           <div>
             <h2 className="my-1 text-sm text-black font-medium">Categoria</h2>
-            <Select>
+            <Select value={categoryItem} onValueChange={setCategoryItem}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select uma categoria" />
               </SelectTrigger>
@@ -117,7 +177,8 @@ export function AddNewTransition() {
                 className={cn(
                   "bg-emerald-500 hover:bg-emerald-500/80 absolute top-1.5 left-1.5 rounded-md p-2 flex items-center justify-center transition",
                   isIncome && "bg-rose-500 hover:bg-rose-500/80"
-                )}>
+                )}
+              >
                 <PlusCircle className="size-3 text-white" />
               </button>
               <CurrencyInput
@@ -136,15 +197,24 @@ export function AddNewTransition() {
                 isIncome && "text-rose-500"
               )}
             >
-                {isIncome ? "Valor de saída" : "Valor de entrada"}
+              {isIncome ? "Valor de saída" : "Valor de entrada"}
             </span>
           </div>
           <div>
             <h2 className="my-1 text-sm text-black font-medium">Descrição</h2>
-            <Textarea placeholder="Eduardo..." />
+            <Textarea
+              placeholder="Diga mais sobre esta transação..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
-          <Button>
-            Adicionar
+          <Button disabled={!(name&&date&&value&&categoryItem)} onClick={onCreateTransaction}>
+            {loading ? (
+                <>
+                    <LoaderCircle className="animate-spin" /> 
+                    Carregando...
+                </>
+            ): "Adicionar"}
           </Button>
         </div>
       </SheetContent>

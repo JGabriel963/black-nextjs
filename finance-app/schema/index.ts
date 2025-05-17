@@ -21,7 +21,10 @@ export const Entries = pgTable('entries', {
 })
 
 
-export const typeTransaction = pgEnum('type_transaction', ['income', 'expense'])
+export type EntrieType = typeof Entries.$inferSelect;
+
+
+const typeTransaction = pgEnum('type_transaction', ['income', 'expense'])
 
 export const Transactions = pgTable('transactions', {
     id: serial('id').primaryKey(),
@@ -30,9 +33,9 @@ export const Transactions = pgTable('transactions', {
     category: varchar('category').notNull(),
     amount: varchar("amount").notNull(),
     type: typeTransaction(),
-    date: timestamp({ mode: "date" }).notNull(),
+    date: timestamp({ mode: "date" }).notNull().defaultNow(),
     createdBy: varchar('created_by').notNull()
 })
 
 
-export type EntrieType = typeof Entries.$inferSelect;
+export type TransactionType = typeof Transactions.$inferSelect

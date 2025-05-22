@@ -56,7 +56,7 @@ export function Columns({ fetchData }: ColumnsProps): ColumnDef<TransactionType>
       const isExpense = amount > 0;
 
       return (
-        <div className="text-left font-medium">
+        <div className="text-left font-medium ">
           <span
             className={cn(
               "bg-emerald-500/40 text-emerald-700 py-1 px-2 rounded-full",

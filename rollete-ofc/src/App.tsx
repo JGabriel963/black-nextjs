@@ -22,30 +22,22 @@ interface Prizes {
   repeat: boolean
 }
 
-// -Cupom de desconto 
-// -Garrafa personalizada 
-// -Amostra do H20 slim 
-// -Amostra da goma de creatina
-// -Passou a vez
-
-const data = [
-  { id: 1, option: "CUPOM DE DESC." },
-  { id: 2, option: "GARRAFA PERS." },
-  { id: 3, option: "H20 SLIM" },
-  { id: 4, option: "GOMA DE CREATINA" },
-  { id: 5, option: "PASSOU A VEZ" },
-];
-
 const alert: Prizes[] = [
-  { id: 1, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "Cupom de desconto", confetti: true, repeat: false },
-  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "Garrafa personalizada", confetti: true, repeat: false },
-  { id: 3, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "Amostra do H20 slim", confetti: true, repeat: false },
-  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar uma ", prize: "Amostra da goma de creatina", confetti: true, repeat: false },
+  { id: 1, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "DESCONTO DE 5%", confetti: true, repeat: false },
+  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "DESCONTO DE 15%", confetti: true, repeat: false },
+  { id: 3, title: "Parabéns 🎉🎉", message: "Escolha seu ", prize: "BRINDE", confetti: true, repeat: false },
+  { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "DESCONTO DE 10%", confetti: true, repeat: false },
   { id: 5, title: "Que pena!", message: "Infelismente não foi dessa vez!", prize: "", confetti: false, repeat: false },
 
 ]
 
-
+const data = [
+  { id: 1, option: "DESCONTO 5%" },
+  { id: 2, option: "DESCONTO 15%" },
+  { id: 3, option: "BRINDE" },
+  { id: 4, option: "DESCONTO 10%" },
+  { id: 5, option: "PASSOU A VEZ" },
+];
 
 export default function App() {
   const [mustSpin, setMustSpin] = useState(false);
@@ -71,17 +63,18 @@ export default function App() {
           disableInitialAnimation={true}
           outerBorderColor="#FFFFFF"
           outerBorderWidth={4}
-          innerBorderColor={"#fffffF"}
+          innerBorderColor={"#f2f2f2"}
+          radiusLineColor={"tranparent"}
           radiusLineWidth={1}
           fontSize={16}
           textColors={["white"]}
           fontWeight="bold"
           spinDuration={0.6}
           backgroundColors={[
-            "#278D9A",
-            "#278D9A",
-            "#278D9A",
-            "#278D9A",
+            "#60a5fa",
+            "#64b031",
+            "oklch(63.7% 0.237 25.331)",
+            "#60a5fa",
             "oklch(63.7% 0.237 25.331)",
             "oklch(63.7% 0.237 25.331)"
           ]}

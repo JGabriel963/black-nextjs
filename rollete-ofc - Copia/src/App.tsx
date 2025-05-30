@@ -41,7 +41,7 @@ const alert: Prizes[] = [
   { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "Garrafa personalizada", confetti: true, repeat: false },
   { id: 3, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar um ", prize: "Amostra do H20 slim", confetti: true, repeat: false },
   { id: 4, title: "Parabéns 🎉🎉", message: "Você acaba de ganhar uma ", prize: "Amostra da goma de creatina", confetti: true, repeat: false },
-  { id: 5, title: "Que pena!", message: "Infelismente não foi dessa vez!", prize: "", confetti: false, repeat: false },
+  { id: 5, title: "Que pena!", message: "Infelizmente não foi dessa vez!", prize: "", confetti: false, repeat: false },
 
 ]
 

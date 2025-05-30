@@ -102,7 +102,7 @@ export default function App() {
       </Button>
 
       {/* External Link */}
-      <a href="https://nasaex.com/totem-principioativo?cod=principio" target="_self" className="absolute top-2 right-2">
+      <a href="https://nasaex.com/totem?cod=principio" target="_self" className="absolute top-2 right-2">
         <ExternalLink className=" hover:text-slate-200 transition cursor-pointer" />
       </a>
 
@@ -135,7 +135,7 @@ export default function App() {
                 </AlertDialogCancel>
               </a>
             } */}
-            <a href="https://nasaex.com/totem-principioativo?cod=principio">
+            <a href="https://nasaex.com/totem?cod=principio">
               <AlertDialogCancel className="cursor-pointer" onClick={() => {
                 setOpen(false);
                 setConfetti(false);
